@@ -1,13 +1,13 @@
 import "./index.css";
 
 import Header from "./components/Header";
-import TextBoxComponent from "./components/TextBoxComponent";
+import Recommendation from "./components/Recommendation";
 
 function App() {
   return (
     <div>
       <Header />
-      <TextBoxComponent />
+      <Recommendation />
     </div>
   );
 }
