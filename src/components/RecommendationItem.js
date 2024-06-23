@@ -6,7 +6,8 @@ const RecommendationItem = ({ book }) => (
       <img
         src={book.cover_image_url}
         alt={`${book.title} cover`}
-        className="w-full md:w-32 h-auto mb-4 flex-shrink-0 md:mb-0"
+        className="w-full md:w-32 h-auto mb-4 flex-shrink-0 md:mb-0 object-contain"
+        style={{ maxWidth: '100%', maxHeight: '100%' }}
       />
     )}
     <div>
@@ -30,3 +31,4 @@ const RecommendationItem = ({ book }) => (
 );
 
 export default RecommendationItem;
+
