@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import axiosInstance from "../api/axios";
-import InputBox from "./InputBox";
-import RecommendationList from "./RecommendationList";
-import LoadingIndicator from "./LoadingIndicator";
+import InputBox from './InputBox';
+import RecommendationList from './RecommendationList';
+import LoadingIndicator from './LoadingIndicator';
 
 const Recommendation = () => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -16,13 +16,13 @@ const Recommendation = () => {
   const handleSubmit = () => {
     setLoading(true);
     axiosInstance
-      .post("/books/recommend", { user_input: inputValue })
+      .post('/books/recommend', { user_input: inputValue })
       .then((response) => {
         setRecommendations(response.data);
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error posting data:", error);
+        console.error('Error posting data:', error);
         setLoading(false);
       });
   };
