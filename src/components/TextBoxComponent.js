@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import axiosInstance from "../api/axios";
+// src/components/TextBoxComponent.js
+import React, { useState } from 'react';
+import axiosInstance from '../api/axios';
+import Button from './Button';
 
 const TextBoxComponent = () => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -13,13 +15,13 @@ const TextBoxComponent = () => {
   const handleSubmit = () => {
     setLoading(true);
     axiosInstance
-      .post("/books/recommend", { user_input: inputValue })
+      .post('/books/recommend', { user_input: inputValue })
       .then((response) => {
         setRecommendations(response.data);
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error posting data:", error);
+        console.error('Error posting data:', error);
         setLoading(false);
       });
   };
@@ -37,21 +39,18 @@ const TextBoxComponent = () => {
         />
       </div>
       <div className="mb-8">
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300"
-        >
-          Submit
-        </button>
+        <Button onClick={handleSubmit} loading={loading}>
+          Ask AI
+        </Button>
       </div>
 
       {loading ? (
         <div className="flex justify-center items-center">
-          <div className="spinner"></div>
+          <span className="animate-pulse text-8xl">...</span>
         </div>
-      ) : (
+      ) : recommendations.length > 0 ? (
         <>
-          <h2 className="text-xl font-semibold mb-4">Recommendations:</h2>
+          <h2 className="text-xl font-semibold mb-4 underline">Recommendations:</h2>
           {recommendations.length > 0 ? (
             <ul className="space-y-4">
               {recommendations.map((book, index) => (
@@ -87,7 +86,7 @@ const TextBoxComponent = () => {
             <p>No recommendations available.</p>
           )}
         </>
-      )}
+      ): null}
     </div>
   );
 };
