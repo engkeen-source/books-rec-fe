@@ -1,12 +1,12 @@
 import React from 'react';
 
 const RecommendationItem = ({ book }) => (
-  <li className="border-b pb-4 flex space-x-4">
+  <li className="border-b pb-4 flex flex-col md:flex-row space-x-0 md:space-x-4">
     {book.cover_image_url && (
       <img
         src={book.cover_image_url}
         alt={`${book.title} cover`}
-        className="w-32 h-auto mb-4 flex-shrink-0"
+        className="w-full md:w-32 h-auto mb-4 flex-shrink-0 md:mb-0"
       />
     )}
     <div>
