@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import axiosInstance from "../api/axios";
-import InputBox from './InputBox';
-import RecommendationList from './RecommendationList';
-import LoadingIndicator from './LoadingIndicator';
+import InputBox from "./InputBox";
+import RecommendationList from "./RecommendationList";
+import LoadingIndicator from "./LoadingIndicator";
 
 const Recommendation = () => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
@@ -16,19 +16,19 @@ const Recommendation = () => {
 
   const handleSubmit = () => {
     setLoading(true);
-    setError('');  // Reset error state before making a new request
+    setError(""); // Reset error state before making a new request
     axiosInstance
-      .post('/books/recommend', { user_input: inputValue })
+      .post("/books/recommend", { user_input: inputValue }, { timeout: 8000 })
       .then((response) => {
         if (response.data.length === 0) {
-          setError('No recommendations available.');
+          setError("No recommendations available.");
         }
         setRecommendations(response.data);
         setLoading(false);
       })
       .catch((error) => {
-        console.error('Error posting data:', error);
-        setError('Error fetching recommendations. Please try again later.');
+        console.error("Error posting data:", error);
+        setError("Error fetching recommendations. Please try again later.");
         setLoading(false);
       });
   };
@@ -46,12 +46,10 @@ const Recommendation = () => {
         <LoadingIndicator />
       ) : error ? (
         <p className="text-red-500">{error}</p>
+      ) : recommendations.length > 0 ? (
+        <RecommendationList recommendations={recommendations} />
       ) : (
-        recommendations.length > 0 ? (
-          <RecommendationList recommendations={recommendations} />
-        ) : (
-          <></>
-        )
+        <></>
       )}
     </div>
   );
