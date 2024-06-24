@@ -8,6 +8,7 @@ const Recommendation = () => {
   const [inputValue, setInputValue] = useState('');
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
@@ -15,14 +16,19 @@ const Recommendation = () => {
 
   const handleSubmit = () => {
     setLoading(true);
+    setError('');  // Reset error state before making a new request
     axiosInstance
       .post('/books/recommend', { user_input: inputValue })
       .then((response) => {
+        if (response.data.length === 0) {
+          setError('No recommendations available.');
+        }
         setRecommendations(response.data);
         setLoading(false);
       })
       .catch((error) => {
         console.error('Error posting data:', error);
+        setError('Error fetching recommendations. Please try again later.');
         setLoading(false);
       });
   };
@@ -38,9 +44,13 @@ const Recommendation = () => {
       />
       {loading ? (
         <LoadingIndicator />
+      ) : error ? (
+        <p className="text-red-500">{error}</p>
       ) : (
-        recommendations.length > 0 && (
+        recommendations.length > 0 ? (
           <RecommendationList recommendations={recommendations} />
+        ) : (
+          <></>
         )
       )}
     </div>
