@@ -18,7 +18,7 @@ const Recommendation = () => {
     setLoading(true);
     setError(""); // Reset error state before making a new request
     axiosInstance
-      .post("/books/recommend", { user_input: inputValue }, { timeout: 8000 })
+      .post("/books/recommend", { user_input: inputValue }, { timeout: 12000 })
       .then((response) => {
         if (response.data.length === 0) {
           setError("No recommendations available.");
